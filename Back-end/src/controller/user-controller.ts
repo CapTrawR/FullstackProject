@@ -43,6 +43,7 @@ export const login = async (req: Request, res: Response) => {
       name: user.name,
       email: user.email,
       codigo_postal: user.codigo_postal,
+      admin: user.admin,
     };
 
     // tenho que verificar se o jwt existe para ele assumir que tem
