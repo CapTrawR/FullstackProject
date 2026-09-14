@@ -4,10 +4,11 @@ export interface UserInterface {
   id: string;
   name: string;
   codigo_postal: string;
+  admin: boolean;
 }
 
 // exportamos a info para poder consumida no UserContext
 export type UserContextType = {
-    user: UserInterface | null;
-    setUser:  React.Dispatch<React.SetStateAction<null>>
-}
+  user: UserInterface | null;
+  setUser: React.Dispatch<React.SetStateAction<null>>;
+};

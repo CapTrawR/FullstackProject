@@ -25,24 +25,31 @@ function Header() {
       console.error("Erro a deslogar o utilizador:", error);
     }
   };
-  
+
   // Função para autenticar o usuário e obter suas informações do backend com base no cookie JWT armazenado
   const handleAuthUser = async () => {
     try {
-          const response = await fetch("http://localhost:3000/me", {
-      method: "GET",
-      credentials: "include",
-    });
-    
-    // Verificar se a resposta do backend foi bem-sucedida
-    if (!response.ok) {
-      console.error("Falhou a autenticar o utilizador");
-      return;
-    }
-    // Obter os dados do usuário a partir da resposta do backend
-    const data = await response.json();
-    // Atualizar o estado do usuário com os dados obtidos do backend
-    setUser(data);
+      const response = await fetch("http://localhost:3000/me", {
+        method: "GET",
+        credentials: "include",
+      });
+
+      // Não está autenticado — situação normal
+      if (response.status === 401) {
+        setUser(null);
+        return;
+      }
+
+      // Verificar se a resposta do backend foi bem-sucedida
+      if (!response.ok) {
+        console.error("Falhou a autenticar o utilizador");
+        return;
+      }
+      // Obter os dados do usuário a partir da resposta do backend
+      const data = await response.json();
+      console.log(data);
+      // Atualizar o estado do usuário com os dados obtidos do backend
+      setUser(data);
     } catch (error) {
       console.error("Erro a autenticar o utilizador:", error);
       return;
@@ -59,8 +66,7 @@ function Header() {
       "flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-md border-1";
     if (location.pathname === path) {
       return `${baseClass} border-[#F2DAAC] bg-[#F2DAAC] text-[#161410]`;
-    }else 
-    return baseClass;
+    } else return baseClass;
   };
 
   return (
@@ -72,24 +78,26 @@ function Header() {
 
         {user ? (
           <div className="flex items-center gap-8 text-white">
-            <div className="flex items-center gap-2 text-[#F2DAAC]">
-              <Link to="/">
-                <div className={getNavItemClass("/")}>
-                  <Box size={18} />
-                </div>
-              </Link>
+            {user.admin && (
+              <div className="hidden items-center gap-2 text-[#F2DAAC] md:flex">
+                <Link to="/">
+                  <div className={getNavItemClass("/")}>
+                    <Box size={18} />
+                  </div>
+                </Link>
 
-              <Link to="/pedidos">
-                <div className={getNavItemClass("/pedidos")}>
-                  <LayoutDashboard size={18} />
-                </div>
-              </Link>
-              <Link to="/">
-                <div className="flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-md border-1">
-                  <Plus size={18} />
-                </div>
-              </Link>
-            </div>
+                <Link to="/pedidos">
+                  <div className={getNavItemClass("/pedidos")}>
+                    <LayoutDashboard size={18} />
+                  </div>
+                </Link>
+                <Link to="/">
+                  <div className="flex h-[35px] w-[35px] cursor-pointer items-center justify-center rounded-md border-1">
+                    <Plus size={18} />
+                  </div>
+                </Link>
+              </div>
+            )}
             <div className="relative cursor-pointer">
               <ShoppingCart size={18} />
               <p className="absolute -top-4 -right-4 flex h-5 w-5 items-center justify-center rounded-full bg-[#F2DAAC] p-1 text-[#161410]">
@@ -98,7 +106,11 @@ function Header() {
             </div>
             <div className="flex items-center gap-2">
               <p>{user.name}</p>
-               <LogOut size={18} className="cursor-pointer" onClick={handleLogout} />
+              <LogOut
+                size={18}
+                className="cursor-pointer"
+                onClick={handleLogout}
+              />
             </div>
           </div>
         ) : (
