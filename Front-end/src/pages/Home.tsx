@@ -3,7 +3,7 @@ import Product from "../components/product";
 import type { ProductType } from "../types/Porduct";
 
 function Home() {
-  const [category, setCategory] = useState("Hamburger");
+  const [category, setCategory] = useState("Hamburgers");
   //variavel de ambiente para os objectos
   const [products, setProducts] = useState<ProductType[]>([]);
   // Ensure category names are consistent
@@ -37,6 +37,10 @@ function Home() {
     }
   };
 
+  const filtredProducts = products.filter((product) => {
+    return product.category === category;
+  });
+  console.log(filtredProducts);
   // se nao usar useEfect fica ciclo infinito
   useEffect(() => {
     getProduct();
@@ -47,8 +51,8 @@ function Home() {
     <div className="mx-auto w-full px-4 text-white md:w-184.25 md:px-0">
       <div className="my-1 flex gap-2 md:my-3">
         <div
-          className={getCategoryClass("Hamburger")}
-          onClick={() => handleCategoryClick("Hamburger")}
+          className={getCategoryClass("Hamburgers")}
+          onClick={() => handleCategoryClick("Hamburgers")}
         >
           Hamburger
         </div>
@@ -67,16 +71,20 @@ function Home() {
       </div>
       <p className="mt-2 mb-2 font-bold text-[#F2DAAC] uppercase">{category}</p>
       <div className="flex flex-col gap-2 md:gap-3">
-        {products.map((product) => (
+        {filtredProducts.map((product) => (
           <Product
             id={product.id}
             description={product.description}
             img={product.img}
             name={product.name}
             price={product.price}
+            category={product.category}
             key={product.id}
           />
         ))}
+        {filtredProducts.length === 0 && (
+          <p>Não existem produtos desta categoria.</p>
+        )}
       </div>
     </div>
   );
