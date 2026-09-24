@@ -71,7 +71,7 @@ function Header() {
 
   return (
     <div className="bg-[#161410]">
-      <div className="md:p-1.2 mx-auto flex w-full items-center justify-between p-3 md:w-[737px]">
+      <div className="mx-auto flex w-full max-w-[737px] items-center justify-between gap-4 px-4 py-3 md:px-0">
         <Link to="/">
           <img src="./logo.png" alt="Logo da Loja Online" />
         </Link>
