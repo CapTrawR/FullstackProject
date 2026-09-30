@@ -25,6 +25,7 @@ function Product({
         `http://localhost:3000/delete-product/${id}`,
         {
           method: "DELETE",
+          credentials: "include",
         },
       );
 
