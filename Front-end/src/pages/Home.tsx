@@ -40,7 +40,7 @@ function Home() {
   const filtredProducts = products.filter((product) => {
     return product.category === category;
   });
-  console.log(filtredProducts);
+
   // se nao usar useEfect fica ciclo infinito
   useEffect(() => {
     getProduct();
@@ -80,6 +80,7 @@ function Home() {
             price={product.price}
             category={product.category}
             key={product.id}
+            setProducts={setProducts}
           />
         ))}
         {filtredProducts.length === 0 && (
