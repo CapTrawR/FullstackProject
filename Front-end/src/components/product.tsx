@@ -1,5 +1,5 @@
 import { ShoppingCart } from "lucide-react";
-import type { ProductType } from "../types/Porduct";
+import type { ProductType } from "../types/Product";
 import { formaterPrice } from "../utils/formaterPrice";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Product from "../components/product";
-import type { ProductType } from "../types/Porduct";
+import type { ProductType } from "../types/Product";
 
 function Home() {
   const [category, setCategory] = useState("Hamburgers");
