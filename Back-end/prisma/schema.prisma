@@ -14,6 +14,8 @@ model User {
   password String
   codigo_postal String
   admin Boolean @default(false)
+
+  cartItems CartItem[]
 }
 
 model Product{
@@ -24,4 +26,17 @@ model Product{
   category String
   img String
   createdAt DateTime @default(now())
+
+  cartItems CartItem[]
+}
+
+model CartItem{
+  id String @id @default(uuid())
+  userId String
+  productId String
+  quantity Int
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
 }
