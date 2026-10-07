@@ -47,7 +47,7 @@ function Header() {
       }
       // Obter os dados do usuário a partir da resposta do backend
       const data = await response.json();
-      console.log(data);
+
       // Atualizar o estado do usuário com os dados obtidos do backend
       setUser(data);
     } catch (error) {
