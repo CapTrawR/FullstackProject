@@ -1,25 +1,39 @@
 import { CircleChevronRight, CircleChevronLeft, Trash } from "lucide-react";
+import { formaterPrice } from "../utils/formaterPrice";
 
-function CartItem() {
+type CartItemType = {
+  title: string;
+  price: number | string;
+  img: string;
+  id: string;
+};
+
+function CartItem({ title, price, img, id }: CartItemType) {
   return (
     <div className="flex items-center gap-3">
-      <img src="./duplo-da-casa.png" alt="" className="w-[100px] rounded-md" />
+      <img src={`./${img}`} alt="" className="w-[100px] rounded-md" />
       <div className="flex-1">
-        <p className="font-bold uppercase">DUPLO DA CASA</p>
-        <p className="font-bold text-[#848484]">28.90 €</p>
-        <div className="mt-1 flex gap-4">
+        <p className="text-sm font-bold uppercase">{title}</p>
+        <p className="text-sm font-bold text-[#848484]">
+          {formaterPrice(price)}
+        </p>
+        <div className="mt-1 flex items-center gap-4">
           <CircleChevronLeft
             className="cursor-pointer rounded-md bg-[#C92A0E] p-1 text-white"
             size={26}
           />
-          <p className="font-bold">1</p>
+          <p className="text-sm font-bold">1</p>
           <CircleChevronRight
             className="cursor-pointer rounded-md bg-[#C92A0E] p-1 text-white"
             size={26}
           />
         </div>
       </div>
-      <Trash className="cursor-pointer p-1" size={26} />
+      <Trash
+        className="cursor-pointer p-1"
+        size={26}
+        onClick={() => alert(id)}
+      />
     </div>
   );
 }
