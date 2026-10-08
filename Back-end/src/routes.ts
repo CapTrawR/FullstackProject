@@ -2,7 +2,10 @@ import { Router } from "express";
 import { login, register, auth, logout } from "./controller/user-controller.js";
 import { authMiddleware } from "./middlewares/auth-middleware.js";
 import { deleteProduct, getProducts } from "./controller/product-controller.js";
-import { getCartItems } from "./controller/cartItem-controller.js";
+import {
+  getCartItems,
+  createCartItem,
+} from "./controller/cartItem-controller.js";
 
 export const router = Router();
 
@@ -18,3 +21,4 @@ router.delete("/delete-product/:id", authMiddleware, deleteProduct);
 
 //Roata do carrinho
 router.get("/get-cart-items", authMiddleware, getCartItems);
+router.post("/create-cart-item", authMiddleware, createCartItem);

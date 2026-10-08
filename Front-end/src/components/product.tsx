@@ -75,7 +75,11 @@ function Product({
             <p className="text-xs font-bold text-[#F2DAAC] md:text-lg">
               {formaterPrice(Number(price))}
             </p>
-            <ShoppingCart size={18} className="cursor-pointer" />
+            <ShoppingCart
+              size={18}
+              className="cursor-pointer"
+              onClick={() => alert(id)}
+            />
           </div>
         </div>
       </div>
