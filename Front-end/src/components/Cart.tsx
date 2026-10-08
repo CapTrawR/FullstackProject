@@ -1,8 +1,8 @@
 import { X } from "lucide-react";
 import Button from "./Button";
 import CartItem from "./CartItem";
-import { useEffect, useState } from "react";
-import type { CartItemType } from "../types/CartItem";
+import { useContext, useEffect } from "react";
+import { CartItemContext } from "../context/CartItemsContext";
 
 // Props para o componente Cart, incluindo a função para controlar a exibição do carrinho
 type CartTypeProps = {
@@ -11,8 +11,9 @@ type CartTypeProps = {
 };
 
 function Cart({ setShowCart, showCart }: CartTypeProps) {
-  // variaveis de estado.
-  const [cartItems, setCartItems] = useState<CartItemType[]>([]);
+  // // variaveis de estado.
+  // const [cartItems, setCartItems] = useState<CartItemType[]>([]);
+  const { cartItems, setCartItems } = useContext(CartItemContext);
 
   const getCartItems = async () => {
     try {

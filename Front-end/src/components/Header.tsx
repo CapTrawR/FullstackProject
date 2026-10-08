@@ -4,10 +4,12 @@ import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
 import { LogOut, ShoppingCart, Box, LayoutDashboard, Plus } from "lucide-react";
 import Cart from "./Cart";
+import { CartItemContext } from "../context/CartItemsContext";
 
 function Header() {
   const [showCart, setShowCart] = useState<boolean>(false);
   const { user, setUser } = useContext(UserContext);
+  const { cartItems, setCartItems } = useContext(CartItemContext);
   const location = useLocation();
 
   const handleLogout = async () => {
@@ -102,7 +104,7 @@ function Header() {
             <div className="relative cursor-pointer">
               <ShoppingCart size={18} onClick={() => setShowCart(!showCart)} />
               <p className="absolute -top-4 -right-4 flex h-5 w-5 items-center justify-center rounded-full bg-[#F2DAAC] p-1 text-[#161410]">
-                1
+                {cartItems.length}
               </p>
             </div>
             <div className="flex items-center gap-2">

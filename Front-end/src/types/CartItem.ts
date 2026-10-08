@@ -7,3 +7,8 @@ export type CartItemType = {
   product: ProductType;
   quantity: number;
 };
+
+export type CartItemsContextType = {
+  cartItems: CartItemType[];
+  setCartItems: React.Dispatch<React.SetStateAction<CartItemType[]>>;
+};
