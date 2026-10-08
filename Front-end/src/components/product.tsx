@@ -1,5 +1,5 @@
 import { ShoppingCart } from "lucide-react";
-import type { ProductType } from "../types/Product";
+import type { ProductProps } from "../types/Product";
 import { formaterPrice } from "../utils/formaterPrice";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
@@ -12,7 +12,7 @@ function Product({
   img,
   category,
   setProducts,
-}: ProductType) {
+}: ProductProps) {
   const { user } = useContext(UserContext);
 
   //apagar o produto funcao
