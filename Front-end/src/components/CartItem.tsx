@@ -6,9 +6,10 @@ type CartItemType = {
   price: number | string;
   img: string;
   id: string;
+  quantity: number;
 };
 
-function CartItem({ title, price, img, id }: CartItemType) {
+function CartItem({ title, price, img, id, quantity }: CartItemType) {
   return (
     <div className="flex items-center gap-3">
       <img src={`./${img}`} alt="" className="w-[100px] rounded-md" />
@@ -22,7 +23,7 @@ function CartItem({ title, price, img, id }: CartItemType) {
             className="cursor-pointer rounded-md bg-[#C92A0E] p-1 text-white"
             size={26}
           />
-          <p className="text-sm font-bold">1</p>
+          <p className="text-sm font-bold">{quantity}</p>
           <CircleChevronRight
             className="cursor-pointer rounded-md bg-[#C92A0E] p-1 text-white"
             size={26}

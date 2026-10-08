@@ -58,9 +58,29 @@ function Header() {
     }
   };
 
+  // Buscar itens do carrinho do usuário
+  const getCartItems = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/get-cart-items", {
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        console.log("Erro ao realizar a req...");
+        return;
+      }
+      const data = await response.json();
+      setCartItems(data);
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  };
+
   useEffect(() => {
     // Chamar a função para autenticar o usuário ao carregar o componente
     handleAuthUser();
+    getCartItems();
   }, []);
 
   const getNavItemClass = (path: string) => {
@@ -70,6 +90,12 @@ function Header() {
       return `${baseClass} border-[#F2DAAC] bg-[#F2DAAC] text-[#161410]`;
     } else return baseClass;
   };
+
+  // Calcular a quantidade total de itens no carrinho
+  let cartQuantity = 0;
+  for (let i = 0; i < cartItems.length; i++) {
+    cartQuantity += cartItems[i].quantity;
+  }
 
   return (
     <div className="bg-[#161410]">
@@ -104,7 +130,7 @@ function Header() {
             <div className="relative cursor-pointer">
               <ShoppingCart size={18} onClick={() => setShowCart(!showCart)} />
               <p className="absolute -top-4 -right-4 flex h-5 w-5 items-center justify-center rounded-full bg-[#F2DAAC] p-1 text-[#161410]">
-                {cartItems.length}
+                {cartQuantity}
               </p>
             </div>
             <div className="flex items-center gap-2">

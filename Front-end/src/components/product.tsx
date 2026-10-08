@@ -3,6 +3,7 @@ import type { ProductProps } from "../types/Product";
 import { formaterPrice } from "../utils/formaterPrice";
 import { UserContext } from "../context/UserContext";
 import { useContext } from "react";
+import { CartItemContext } from "../context/CartItemsContext";
 
 function Product({
   id,
@@ -14,9 +15,10 @@ function Product({
   setProducts,
 }: ProductProps) {
   const { user } = useContext(UserContext);
+  const { cartItems, setCartItems } = useContext(CartItemContext);
 
   //apagar o produto funcao
-  const handleDleteProduct = async (id: string) => {
+  const handleDeleteProduct = async (id: string) => {
     try {
       if (!id) {
         console.log("Id nao encontrado");
@@ -52,6 +54,46 @@ function Product({
     }
   };
 
+  // Buscar itens do carrinho do usuário
+  const getCartItems = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/get-cart-items", {
+        credentials: "include",
+      });
+
+      if (!response.ok) {
+        console.log("Erro ao realizar a req...");
+        return;
+      }
+      const data = await response.json();
+      setCartItems(data);
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  };
+
+  // Adicionar item ao carrinho
+  const newCartItem = async () => {
+    try {
+      const response = await fetch("http://localhost:3000/create-cart-item", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ productId: id }),
+      });
+
+      if (!response.ok) {
+        console.log("Erro ao adicionar item ao carrinho");
+        return;
+      }
+      getCartItems();
+    } catch (error) {
+      console.log(error);
+      return;
+    }
+  };
+
   return (
     <div>
       <div className="flex gap-2">
@@ -62,7 +104,7 @@ function Product({
             {user?.admin && (
               <div
                 className="flex cursor-pointer items-center rounded-md border-1 px-1 text-xs text-red-400 uppercase"
-                onClick={() => handleDleteProduct(id)}
+                onClick={() => handleDeleteProduct(id)}
               >
                 Apagar
               </div>
@@ -78,7 +120,7 @@ function Product({
             <ShoppingCart
               size={18}
               className="cursor-pointer"
-              onClick={() => alert(id)}
+              onClick={() => newCartItem()}
             />
           </div>
         </div>
